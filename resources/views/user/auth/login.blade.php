@@ -1,0 +1,61 @@
+@extends('project_layout')
+
+@section('title')
+    <title>Login</title>
+@endsection
+
+@section('content')
+    <section class="container">
+        <h1>Learnify</h1>
+        <h3>The Best Way To Develop Yourself</h3>
+        <p>Login</p>
+
+        @if (Session::has('success'))
+            <p class="alert alert-success">{{ Session::get('success') }}</p>
+        @endif
+
+        @if (Session::has('error'))
+            <p class="alert alert-danger">{{ Session::get('error') }}</p>
+        @endif
+
+        <form action="/login" method="post">
+            @CSRF
+
+            {{-- email --}}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror"
+                    value="{{ old('email') }}">
+                @error('email')
+                    <p class="invalid-feedback">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- password --}}
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password"
+                    class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
+                @error('password')
+                    <p class="invalid-feedback">{{ $message }}</p>
+                @enderror
+            </div>
+            {{-- remember me --}}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" name="remember">
+                <label class="form-check-label" for="flexCheckChecked">
+                    remember me
+                </label>
+            </div>
+            <br>
+            {{-- button --}}
+            <div class="mb-3">
+                <button class="btn btn-primary">Login</button>
+            </div>
+            <p>Don't have an account?</p>
+            <a href="/register">Create account</a>
+
+
+        </form>
+    </section>
+@endsection
